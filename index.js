@@ -26,6 +26,7 @@ var JUnitReporter = function (baseReporterDecorator, config, logger, helper, for
   var nameFormatter = reporterConfig.nameFormatter || defaultNameFormatter
   var classNameFormatter = reporterConfig.classNameFormatter
   var properties = reporterConfig.properties
+  var allowSurrogateChars = reporterConfig.allowSurrogateChars
   // The below two variables have to do with adding support for new SonarQube XML format
   var XMLconfigValue = reporterConfig.xmlVersion
   var NEWXML
@@ -70,11 +71,21 @@ var JUnitReporter = function (baseReporterDecorator, config, logger, helper, for
     var timestamp = (new Date()).toISOString().substr(0, 19)
     var suite
     if (NEWXML) {
-      suite = suites[browser.id] = builder.create('unitTest')
+      suite = suites[browser.id] = builder.create(
+         'unitTest',
+         null,
+         null,
+         { allowSurrogateChars: allowSurrogateChars }
+      )
       suite.att('version', '1')
       exposee = suite.ele('file', {'path': 'fixedString'})
     } else {
-      suite = suites[browser.id] = builder.create('testsuite')
+      suite = suites[browser.id] = builder.create(
+         'testsuite',
+         null,
+         null,
+         { allowSurrogateChars: allowSurrogateChars }
+      )
       suite.att('name', browser.name)
       .att('package', pkgName)
       .att('timestamp', timestamp)
