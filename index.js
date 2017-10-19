@@ -72,7 +72,7 @@ var JUnitReporter = function (baseReporterDecorator, config, logger, helper, for
     var suite
     if (NEWXML) {
       suite = suites[browser.id] = builder.create(
-         'unitTest',
+         'testExecutions',
          null,
          null,
          { allowSurrogateChars: allowSurrogateChars }
