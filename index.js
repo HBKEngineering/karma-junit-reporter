@@ -244,7 +244,11 @@ var JUnitReporter = function (baseReporterDecorator, config, logger, helper, for
     }
 
     if (result.skipped) {
-      spec.ele('skipped')
+           if(NEWXML){
+            spec.ele('skipped', {message: 'Skipped ' + nameFormatter(browser, result)})
+           } else {
+              spec.ele('skipped')
+           }
     }
 
     if (!result.success) {
